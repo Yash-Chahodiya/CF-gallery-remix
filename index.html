@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Permits Module</title>
+    <!-- <link rel="stylesheet" href="./public/demoClient.bundle.css" /> -->
+    <!-- <link rel="stylesheet" href="./public/demo.worker.bundle.css" /> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="p-6">
+    <div id="root1"></div>
+
+    <script src="./public/webviewer.min.js"></script>
+    <!--    // add the webviewer file to display the pdf and use the window object to
+    show that pdf express viewer -->
+    <script src="https://unpkg.com/comlink/dist/umd/comlink.js"></script>
+
+    <script type="module">
+      async function loadComponent(workerScript, rootId) {
+        const root = document.getElementById(rootId);
+        root.innerHTML = "Loading...";
+
+        try {
+          const worker = new Worker(workerScript, { type: "module" });
+          const { renderComponent } = Comlink.wrap(worker);
+          const html = await renderComponent();
+          root.innerHTML = html;
+          worker.terminate();
+          await import("./public/demoClient.bundle.js");
+        } catch (error) {
+          console.error(`Error loading component: ${error}`);
+          root.innerHTML = "Error loading component";
+        }
+      }
+
+      loadComponent("./public/demo.worker.bundle.js", "root1");
+    </script>
+  </body>
+</html>

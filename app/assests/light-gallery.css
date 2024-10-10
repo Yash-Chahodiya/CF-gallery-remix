@@ -1,0 +1,28 @@
+.lg-backdrop {
+  @apply !bg-black/80;
+}
+
+.lg-toolbar,
+.lg-sub-html {
+  @apply !bg-[#00000073];
+}
+
+.lg-outer .lg-item.lg-complete .lg-object {
+  @apply rounded-[10px];
+}
+
+.lg-backdrop.in {
+  @apply !z-[9998];
+}
+
+.lg-outer.lg-visible {
+  @apply !z-[9999];
+}
+
+.lg-media-overlap .lg-sub-html {
+  background-image: none !important;
+}
+
+.lg-sub-html h4 {
+  @apply !text-base;
+}
